@@ -59,7 +59,7 @@ public struct QLThumbnail: View {
         }
     }
     
-    var image: Image? {
+    private var image: Image? {
         #if canImport(UIKit)
         guard let uiImage = thumbnail?.uiImage else { return nil }
         return Image(uiImage: uiImage)
@@ -69,7 +69,7 @@ public struct QLThumbnail: View {
         #endif
     }
     
-    var request: QLThumbnailGenerator.Request {
+    private var request: QLThumbnailGenerator.Request {
         QLThumbnailGenerator.Request(fileAt: url,
                                      size: size,
                                      scale: scale,
