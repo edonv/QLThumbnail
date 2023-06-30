@@ -86,10 +86,12 @@ extension QLThumbnailGenerator {
                 switch type {
                 case .thumbnail:
                     continuation.finish()
+                case .icon:
+                    fallthrough
+                case .lowQualityThumbnail:
+                    fallthrough
                 @unknown default:
                     break
-//                default:
-//                    break
                 }
             }
         }
