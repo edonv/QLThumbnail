@@ -25,7 +25,7 @@ public struct QLThumbnail: View {
     @State private var previewItem: URL? = nil
     
     @ViewBuilder
-    var body: some View {
+    public var body: some View {
         Group {
             if let image {
                 Group {
