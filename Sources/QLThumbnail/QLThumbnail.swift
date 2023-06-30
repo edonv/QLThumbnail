@@ -23,7 +23,15 @@ public struct QLThumbnail: View {
     /// This property is only relevant in iOS 14+ and macOS 11+.
     ///
     /// This is because [`quickLookPreview(_:)`](https://developer.apple.com/documentation/swiftui/view/quicklookpreview(_:)) is what's used behind the scenes.
-    public var tapToPreview: Bool = false
+    public var tapToPreview: Bool
+    
+    public init(url: URL, size: CGSize, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false) {
+        self.url = url
+        self.size = size
+        self.scale = scale
+        self.representationTypes = representationTypes
+        self.tapToPreview = tapToPreview
+    }
     
     @State private var thumbnail: QLThumbnailRepresentation? = nil
     @State private var previewItem: URL? = nil
