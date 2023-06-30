@@ -11,7 +11,7 @@ import QuickLookThumbnailing
 
 import SwiftUIBackports
 
-struct QLThumbnail: View {
+public struct QLThumbnail: View {
     var url: URL
     var size: CGSize
     var scale: CGFloat
