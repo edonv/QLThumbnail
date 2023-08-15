@@ -14,7 +14,7 @@ import SwiftUIBackports
 public struct QLThumbnail: View {
     public var url: URL
     
-    public var size: CGSize
+    public var resolution: CGSize
     
     public var scale: CGFloat
     
@@ -25,9 +25,9 @@ public struct QLThumbnail: View {
     /// This is because [`quickLookPreview(_:)`](https://developer.apple.com/documentation/swiftui/view/quicklookpreview(_:)) is what's used behind the scenes.
     public var tapToPreview: Bool
     
-    public init(url: URL, size: CGSize, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false) {
+    public init(url: URL, resolution: CGSize, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false) {
         self.url = url
-        self.size = size
+        self.resolution = resolution
         self.scale = scale
         self.representationTypes = representationTypes
         self.tapToPreview = tapToPreview
@@ -79,7 +79,7 @@ public struct QLThumbnail: View {
     
     private var request: QLThumbnailGenerator.Request {
         QLThumbnailGenerator.Request(fileAt: url,
-                                     size: size,
+                                     size: resolution,
                                      scale: scale,
                                      representationTypes: representationTypes)
     }
