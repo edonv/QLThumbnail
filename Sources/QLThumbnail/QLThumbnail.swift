@@ -126,14 +126,13 @@ extension QLThumbnail {
     ///   - representationTypes: The different thumbnail types. For a list of all possible thumbnail representation types, see [QLThumbnailGenerator.Request.RepresentationTypes](https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator/request/representationtypes).
     ///   - tapToPreview: Whether tapping the thumbnail will show a full-screen preview of the file.
     ///   - resizable: Whether the resulting thumbnail should be allowed to resize to fit its space. When this is set to `false`, it will stay at the image size set by `resolution`.
-    public init(url: URL, resolution: CGFloat, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false, resizable: Bool = false, requestHandler: @escaping (inout QLThumbnailGenerator.Request) -> Void = { _ in }) {
+    public init(url: URL, resolution: CGFloat, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false, resizable: Bool = false) {
         self.url = url
         self.resolution = .init(width: resolution, height: resolution)
         self.scale = scale
         self.representationTypes = representationTypes
         self.tapToPreview = tapToPreview
         self.resizable = resizable
-        self.requestHandler = requestHandler
     }
 }
 
