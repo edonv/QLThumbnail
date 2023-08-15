@@ -117,6 +117,26 @@ public struct QLThumbnail: View {
     }
 }
 
+extension QLThumbnail {
+    /// Creates a thumbnail view of the file at the provided URL.
+    /// - Parameters:
+    ///   - url: The URL of the file for which you want to create a thumbnail.
+    ///   - resolution: The desired size of the thumbnails (the actual size of the thumbnail image). This value will be used as both the `width` and `height`.
+    ///   - scale: The scale of the thumbnails. This parameter usually represents the scale of the current screen. However, you can pass a screen scale to the initializer that isn’t the current device’s screen scale. For example, you can create thumbnails for different scales and upload them to a server in order to download them later on devices with a different screen scale.
+    ///   - representationTypes: The different thumbnail types. For a list of all possible thumbnail representation types, see [QLThumbnailGenerator.Request.RepresentationTypes](https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator/request/representationtypes).
+    ///   - tapToPreview: Whether tapping the thumbnail will show a full-screen preview of the file.
+    ///   - resizable: Whether the resulting thumbnail should be allowed to resize to fit its space. When this is set to `false`, it will stay at the image size set by `resolution`.
+    public init(url: URL, resolution: CGFloat, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false, resizable: Bool = false, requestHandler: @escaping (inout QLThumbnailGenerator.Request) -> Void = { _ in }) {
+        self.url = url
+        self.resolution = .init(width: resolution, height: resolution)
+        self.scale = scale
+        self.representationTypes = representationTypes
+        self.tapToPreview = tapToPreview
+        self.resizable = resizable
+        self.requestHandler = requestHandler
+    }
+}
+
 extension QLThumbnailGenerator {
     public func generateRepresentations(for request: Request) -> AsyncThrowingStream<QLThumbnailRepresentation, Error> {
         AsyncThrowingStream(QLThumbnailRepresentation.self) { continuation in
