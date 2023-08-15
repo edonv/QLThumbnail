@@ -37,6 +37,11 @@ public struct QLThumbnail: View {
     /// This property is only relevant in iOS 14+ and macOS 11+. This is because [`quickLookPreview(_:)`](https://developer.apple.com/documentation/swiftui/view/quicklookpreview(_:)) is what's used behind the scenes.
     public var tapToPreview: Bool
     
+    /// Whether the resulting thumbnail should be allowed to resize to fit its space. When this is set to `false`, it will stay at the image size set by ``resolution``.
+    ///
+    /// Internally, this enables the use of [.resizable(capInsets:resizingMode:)](https://developer.apple.com/documentation/swiftui/image/resizable(capinsets:resizingmode:)).
+    public var resizable: Bool
+    
     /// Creates a thumbnail view of the file at the provided URL.
     /// - Parameters:
     ///   - url: The URL of the file for which you want to create a thumbnail.
@@ -44,12 +49,14 @@ public struct QLThumbnail: View {
     ///   - scale: The scale of the thumbnails. This parameter usually represents the scale of the current screen. However, you can pass a screen scale to the initializer that isn’t the current device’s screen scale. For example, you can create thumbnails for different scales and upload them to a server in order to download them later on devices with a different screen scale.
     ///   - representationTypes: The different thumbnail types. For a list of all possible thumbnail representation types, see [QLThumbnailGenerator.Request.RepresentationTypes](https://developer.apple.com/documentation/quicklookthumbnailing/qlthumbnailgenerator/request/representationtypes).
     ///   - tapToPreview: Whether tapping the thumbnail will show a full-screen preview of the file.
-    public init(url: URL, resolution: CGSize, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false) {
+    ///   - resizable: Whether the resulting thumbnail should be allowed to resize to fit its space. When this is set to `false`, it will stay at the image size set by `resolution`.
+    public init(url: URL, resolution: CGSize, scale: CGFloat, representationTypes: QLThumbnailGenerator.Request.RepresentationTypes, tapToPreview: Bool = false, resizable: Bool = false) {
         self.url = url
         self.resolution = resolution
         self.scale = scale
         self.representationTypes = representationTypes
         self.tapToPreview = tapToPreview
+        self.resizable = resizable
     }
     
     @State private var thumbnail: QLThumbnailRepresentation? = nil
@@ -62,9 +69,15 @@ public struct QLThumbnail: View {
                 Group {
                     if #available(iOS 14, macOS 11, *) {
                         image
+                            .if(resizable) {
+                                $0.resizable()
+                            }
                             .quickLookPreview($previewItem)
                     } else {
                         image
+                            .if(true) {
+                                $0.resizable()
+                            }
                     }
                 }
                 .onTapGesture {
