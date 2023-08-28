@@ -80,6 +80,7 @@ public struct QLThumbnail: View {
                             }
                     }
                 }
+                .allowsHitTesting(tapToPreview)
                 .onTapGesture {
                     guard tapToPreview else { return }
                     previewItem = url
