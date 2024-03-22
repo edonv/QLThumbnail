@@ -25,7 +25,9 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "QLThumbnail",
-            dependencies: [.byNameItem(name: "SwiftUIBackports", condition: nil)]),
+            dependencies: [.byNameItem(name: "SwiftUIBackports", condition: nil)],
+            resources: [.copy("../PrivacyInfo.xcprivacy")]
+        ),
         .testTarget(
             name: "QLThumbnailTests",
             dependencies: ["QLThumbnail"]),
